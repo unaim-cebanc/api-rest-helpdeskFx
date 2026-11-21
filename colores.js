@@ -16,8 +16,8 @@ function greenBold(msg) {
     return pc.green(pc.bold(msg));
 }
 
-function grey(msg) {
-    return pc.grey(msg);
+function gris(msg) {
+    return pc.gray(msg);
 }
 
 module.exports = {
@@ -25,5 +25,5 @@ module.exports = {
     cyanBold: cyanBold,
     redBold: redBold,
     greenBold: greenBold,
-    grey: grey
+    gris: gris
 };

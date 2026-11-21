@@ -1,16 +1,23 @@
+const http = require('node:http');
+const { yellowBold, cyanBold, redBold, greenBold, gris } = require('./colores');
+
 function log_request(req) {
-    console.log('--- Request ---');
-    console.log(`url: ${req.url}`);
-    console.log(`Metodo: ${req.method}`);
-    console.log('-'.repeat(15));
+    console.log(cyanBold('\n--- Request ---'));
+    console.log(gris('url:'), yellowBold(req.url));
+    console.log(gris('Metodo:'), yellowBold(req.method));
+    console.log(cyanBold('-'.repeat(15)));
 }
 
 function log_response(res, body) {
     const statusMsg = http.STATUS_CODES[res.statusCode];
-    console.log('--- Response ---');
-    console.log(`Estado: ${res.statusCode} ${statusMsg}`);
-    console.log(`Respuesta: ${JSON.stringify(body)}`);
-    console.log('-'.repeat(16));
+    console.log(cyanBold('\n--- Response ---'));
+    if (res.statusCode === 404) {
+        console.log(gris('Estado:'), redBold(`${res.statusCode} ${statusMsg}`));
+    } else {
+        console.log(gris('Estado:'), greenBold(`${res.statusCode} ${statusMsg}`))
+    }
+    console.log(gris('Respuesta:'), yellowBold(JSON.stringify(body)));
+    console.log(cyanBold('-'.repeat(16)));
 }
 
 module.exports = {

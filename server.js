@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('node:fs');
 const path = require('path');
 const { log_request, log_response } = require('./logs');
+const { yellowBold } = require('./colores');
 
 // --- Archivos JSON ---
 const incidencias = require('./data/incidencias.json');
@@ -61,8 +62,6 @@ app.post('/api/incidencias', (req, res) => {
     log_response(res, incidencia);
 });
 
-
-
 app.listen(port, () => {
-    console.log(`Escuchando en el puerto ${port}`);
+    console.log(yellowBold(`Escuchando en el puerto ${port}`));
 });
