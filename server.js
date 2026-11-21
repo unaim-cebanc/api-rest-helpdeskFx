@@ -64,13 +64,13 @@ app.post('/api/incidencias', (req, res) => {
 
 
 // --- --- Clientes --- ---
-app.get('api/clientes', (req, res) => {
+app.get('/api/clientes', (req, res) => {
     log_request(req);
     res.status(200).json(clientes);
     log_response(res, clientes);
 });
 
-app.get('api/clientes/:id', (req, res) => {
+app.get('/api/clientes/:id', (req, res) => {
     log_request(req);
     const id = Number(req.params.id);
     const cliente = clientes.find(c => c.id === id);
