@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('node:fs');
 const path = require('path');
 const { log_request, log_response } = require('./logs');
+const { yellowBold } = require('./colores');
 
 // --- Archivos JSON ---
 const incidencias = require('./data/incidencias.json');
@@ -15,6 +16,7 @@ const pathCli = path.join(__dirname, 'data', 'clientes.json');
 // --- Servidor ---
 const app = express();
 const port = 5082;
+const errorMsg = { error: 'No encontrado' };
 app.use(express.json());
 
 
@@ -22,7 +24,7 @@ app.use(express.json());
 app.get('/api/incidencias', (req, res) => {
     log_request(req);
     res.json(incidencias);
-    log_response(res);
+    log_response(res, incidencias);
 });
 
 app.get('/api/incidencias/:codigo', (req, res) => {
@@ -31,8 +33,8 @@ app.get('/api/incidencias/:codigo', (req, res) => {
     const incidencia = incidencias.find(i => i.codigo === codigo);
     
     if (!incidencia) {
-        res.status(404).json({ error: 'No se ha encontrado' });
-        log_response(res);
+        res.status(404).json(errorMsg);
+        log_response(res, errorMsg);
         return;
     }
     res.status(200).json(incidencia);
@@ -57,11 +59,9 @@ app.post('/api/incidencias', (req, res) => {
     
     res.status(201).json(incidencia);
     
-    log_response(res);
+    log_response(res, incidencia);
 });
 
-
-
 app.listen(port, () => {
-    console.log(`Escuchando en el puerto ${port}`);
+    console.log(yellowBold(`Escuchando en el puerto ${port}`));
 });
