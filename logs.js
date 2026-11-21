@@ -6,9 +6,11 @@ function log_request(req) {
 }
 
 function log_response(res, body) {
+    const statusMsg = http.STATUS_CODES[res.statusCode];
     console.log('--- Response ---');
-    console.log(`Estado: ${res.statusCode}`);
+    console.log(`Estado: ${res.statusCode} ${statusMsg}`);
     console.log(`Respuesta: ${JSON.stringify(body)}`);
+    console.log('-'.repeat(16));
 }
 
 module.exports = {
