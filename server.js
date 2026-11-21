@@ -62,6 +62,35 @@ app.post('/api/incidencias', (req, res) => {
     log_response(res, incidencia);
 });
 
+
+// --- --- Clientes --- ---
+app.get('api/clientes', (req, res) => {
+    log_request(req);
+    res.status(200).json(clientes);
+    log_response(res, clientes);
+});
+
+app.get('api/clientes/:id', (req, res) => {
+    log_request(req);
+    const id = Number(req.params.id);
+    const cliente = clientes.find(c => c.id === id);
+    
+    if (!cliente) {
+        res.status(404).json(errorMsg);
+        log_response(res, errorMsg);
+        return;
+    }
+    
+    res.status(202).json(cliente);
+    log_response(res, cliente);
+});
+
+app.use((req, res) => {
+    log_request(req);
+    res.status(404).json(errorMsg);
+    log_response(res, errorMsg);
+});
+
 app.listen(port, () => {
     console.log(yellowBold(`Escuchando en el puerto ${port}`));
 });
