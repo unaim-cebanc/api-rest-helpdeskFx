@@ -81,7 +81,7 @@ app.get('/api/clientes/:id', (req, res) => {
         return;
     }
     
-    res.status(202).json(cliente);
+    res.status(200).json(cliente);
     log_response(res, cliente);
 });
 
