@@ -1,0 +1,12 @@
+GET http://localhost:5082/api/incidencias
+
+### POST crear una nueva incidencia (la primera nueva será H004)
+POST http://localhost:5082/api/incidencias
+Content-Type: application/json
+
+{
+  "titulo": "Impresora atascada",
+  "prioridad": "Media",
+  "fecha": "2026-11-05T00:00:00",
+  "descripcion": "La impresora de la planta 1 se atasca con cada hoja."
+}
