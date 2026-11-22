@@ -85,6 +85,25 @@ app.get('/api/clientes/:id', (req, res) => {
     log_response(res, cliente);
 });
 
+app.post('/api/clientes', (req, res) => {
+    log_request(req);
+    
+    const id = clientes[clientes.length - 1];
+    const cliente = {
+        "id": id,
+        "nombre": req.body.nombre,
+        "email": req.body.nombre,
+        "telefono": req.body.telefono
+    }
+    
+    clientes.push(cliente);
+    fs.writeFileSync(pathCli, JSON.stringify(clientes));
+    
+    res.status(201).json(cliente);
+    
+    log_response(res, cliente);
+})
+
 app.use((req, res) => {
     log_request(req);
     res.status(404).json(errorMsg);
