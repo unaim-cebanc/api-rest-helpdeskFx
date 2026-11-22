@@ -55,7 +55,7 @@ app.post('/api/incidencias', (req, res) => {
     };
     
     incidencias.push(incidencia);
-    fs.writeFileSync(pathInc, JSON.stringify(incidencias));
+    fs.writeFileSync(pathInc, JSON.stringify(incidencias, null, 4));
     
     res.status(201).json(incidencia);
     
@@ -97,12 +97,37 @@ app.post('/api/clientes', (req, res) => {
     }
     
     clientes.push(cliente);
-    fs.writeFileSync(pathCli, JSON.stringify(clientes));
+    fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
     
     res.status(201).json(cliente);
     
     log_response(res, cliente);
-})
+});
+
+app.put('/api/clientes/:id', (req, res) => {
+    log_request(req);
+    
+    const id = req.params.id;
+    const index = clientes.findIndex(c => c.id === id);
+    
+    if (index === -1) {
+        res.status(404).json(errorMsg);
+        log_response(res, errorMsg);
+        return;
+    }
+    
+    clientes[index] = {
+        "id": id,
+        "nombre": req.body.nombre || clientes[index].nombre,
+        "email": req.body.email || clientes[index].email,
+        "telefono": req.body.telefono || clientes[index].telefono
+    };
+    fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
+    
+    res.status(200).json(clientes[index]);
+    
+    log_response(res, clientes[index]);
+});
 
 app.use((req, res) => {
     log_request(req);
