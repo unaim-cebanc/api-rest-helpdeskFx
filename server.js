@@ -37,8 +37,9 @@ app.get('/api/incidencias/:codigo', (req, res) => {
         log_response(res, errorMsg);
         return;
     }
+    
     res.status(200).json(incidencia);
-    log_response(res);
+    log_response(res, incidencia);
 });
 
 app.post('/api/incidencias', (req, res) => {
@@ -58,7 +59,6 @@ app.post('/api/incidencias', (req, res) => {
     fs.writeFileSync(pathInc, JSON.stringify(incidencias, null, 4));
     
     res.status(201).json(incidencia);
-    
     log_response(res, incidencia);
 });
 
@@ -72,6 +72,7 @@ app.get('/api/clientes', (req, res) => {
 
 app.get('/api/clientes/:id', (req, res) => {
     log_request(req);
+    
     const id = Number(req.params.id);
     const cliente = clientes.find(c => c.id === id);
     
@@ -100,14 +101,13 @@ app.post('/api/clientes', (req, res) => {
     fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
     
     res.status(201).json(cliente);
-    
     log_response(res, cliente);
 });
 
 app.put('/api/clientes/:id', (req, res) => {
     log_request(req);
     
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const index = clientes.findIndex(c => c.id === id);
     
     if (index === -1) {
@@ -125,9 +125,26 @@ app.put('/api/clientes/:id', (req, res) => {
     fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
     
     res.status(200).json(clientes[index]);
-    
     log_response(res, clientes[index]);
 });
+
+app.delete('/api/clientes/:id', (req, res) => {
+    log_request(req);
+    
+    const id = Number(req.params.id);
+    const index = clientes.findIndex(c => c.id === id);
+    if (index === -1) {
+        res.status(404).json(errorMsg);
+        log_response(res, errorMsg);
+        return;
+    }
+    
+    clientes.slice(clientes[index]);
+    fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
+    
+    res.status(200).json({ message: 'Se ha eliminado correctamente' });
+    log_response(res, { message: 'Se ha eliminado correctamente' });
+})
 
 app.use((req, res) => {
     log_request(req);
