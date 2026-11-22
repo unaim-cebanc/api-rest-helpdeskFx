@@ -89,7 +89,7 @@ app.get('/api/clientes/:id', (req, res) => {
 app.post('/api/clientes', (req, res) => {
     log_request(req);
     
-    const id = clientes[clientes.length - 1];
+    const id = clientes[clientes.length - 1].id;
     const cliente = {
         "id": id,
         "nombre": req.body.nombre,
