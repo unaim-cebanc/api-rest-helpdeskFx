@@ -89,7 +89,7 @@ app.get('/api/clientes/:id', (req, res) => {
 app.post('/api/clientes', (req, res) => {
     log_request(req);
     
-    const id = clientes[clientes.length - 1].id;
+    const id = clientes[clientes.length - 1].id + 1;
     const cliente = {
         "id": id,
         "nombre": req.body.nombre,
@@ -139,7 +139,7 @@ app.delete('/api/clientes/:id', (req, res) => {
         return;
     }
     
-    clientes.slice(clientes[index]);
+    clientes.splice(index, 1);
     fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
     
     res.status(200).json({ message: 'Se ha eliminado correctamente' });
