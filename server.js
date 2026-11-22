@@ -139,7 +139,7 @@ app.delete('/api/clientes/:id', (req, res) => {
         return;
     }
     
-    clientes.slice(clientes[index]);
+    clientes.slice(index, 1);
     fs.writeFileSync(pathCli, JSON.stringify(clientes, null, 4));
     
     res.status(200).json({ message: 'Se ha eliminado correctamente' });
